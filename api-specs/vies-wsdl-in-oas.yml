@@ -1,0 +1,84 @@
+---
+openapi: 3.0.2
+info:
+  title: |
+    VIES (wsdl-on-openapi)
+  description: "#### Documentazione\n\n    Questa pagina web consente di verificare\
+    \ la validità di un numero di partita IVA rilasciato da uno Stato membro. È sufficiente\
+    \ inserire la partita IVA che si desidera verificare e scegliere dall'apposito\
+    \ menu lo Stato membro che ha attribuito il numero da verificare.\n\nLa verifica\
+    \ è effettuata a partire dalla base di dati IVA nazionale dello Stato membro selezionato,\
+    \ poiché non esistono basi di dati IVA a livello comunitario. Per effettuare la\
+    \ verifica, le richieste sono inviate alle basi di dati nazionali attraverso un\
+    \ servizio Intranet protetto che collega tra loro le amministrazioni doganali\
+    \ e tributarie nazionali. La risposta è trasmessa nello spazio di pochi secondi.\n\
+    \nSi prega di tener conto del fatto che gli eventuali caratteri alfabetici del\
+    \ numero di partita IVA vanno scritti in lettere maiuscole e che vanno omessi\
+    \ gli spazi e i punti che separano le serie di cifre. Il numero dev'essere scritto\
+    \ in un'unica successione di caratteri senza spazi né punti.\n\nCliccando sul\
+    \ bottone \"Verificare\" si avrà una delle seguenti risposte:\n\n\n\nSì, partita\
+    \ IVA valida.\nNo, partita IVA non valida. (Significa che il numero inserito non\
+    \ è valido, almeno alla data indicata)\nServizio non disponibile. Si prega di\
+    \ riformulare la richiesta più tardi. (Significa che vi sono problemi sulla rete\
+    \ o nell'applicazione Web)\nServizio non disponibile nello Stato membro. Si prega\
+    \ di riformulare la richiesta più tardi. (Significa che non è disponibile l'applicazione\
+    \ nello Stato membro il cui numero di partita IVA si vuole verificare)\nErrore:\
+    \ i dati forniti sono incompleti (partita IVA + Stato membro) o inesatti.\nTempo\
+    \ della richiesta scaduto. Si prega di riformulare la richiesta più tardi.\nNel\
+    \ caso di un numero IVA valido, se il nome e/o l'indirizzo sono rimpiazzati da\
+    \ \"---\", cio' significa che lo Stato Membro che ha attribuito il numero IVA\
+    \ non autorizza la divulgazione di questa informazione.\n\n\nSe si inserisce il\
+    \ proprio numero di identificazione IVA nella casella del numero d’identificazione\
+    \ IVA del richiedente, la risposta conterrà un unico numero di consultazione.\n\
+    \nSe si desidera poter provare all’amministrazione fiscale di uno Stato Membro\
+    \ che un certo numero IVA è stato verificato in un dato momento e che è stata\
+    \ ottenuta una risposta di convalida, si prega di conservare tale numero di consultazione\
+    \ nei propri archivi.\n\nSi tenga presente che la conferma della validità di un\
+    \ numero di identificazione IVA e/o l’attribuzione di tale numero ad una determinata\
+    \ persona costituisce solo UNO degli elementi di prova a sostegno sia dell’esenzione\
+    \ per una cessione intra-comunitaria di beni (articolo 138, par. 1, della direttiva\
+    \ 2006/112/CE) che per la non applicazione dell’IVA su una prestazione di servizi\
+    \ in relazione alla sua localizzazione in un altro Stato Membro.\n\n\n\n\n\n\n\
+    In order to respond to expressed needs, the Vies-on-the-Web system started offering\
+    \ the testing facility to the development teams trying to:\n\nPerform integration\
+    \ testing of their own applications;\nOr to verify the availability of the VIES-on-the-Web\
+    \ application.\nBoth actions can be performed as follows:\n\nFor the Interactive\
+    \ service:\n\nIn the field “VAT Number”, please input the following exact text\
+    \ “TESTVATNUMBER”;\nPush “Verify”;\nThe reply to be received should be: “No, invalid\
+    \ VAT number”;\n → the aforementioned reply means that the Service is available.\n\
+    \n \n\nFor the SOAP service you may send your xml request by using the following\
+    \ WSDL link:\n\nhttp://ec.europa.eu/taxation_customs/vies/checkVatTestService.wsdl\n\
+    \nand by using the below values (common for all Member States/ CountryCodes) for\
+    \ each required result:\n\n \n\n“vatNumber” value=100, response= VALID\n\n“vatNumber”\
+    \ value=200, response = INVALID\n"
+  termsOfService: http://ec.europa.eu/taxation_customs/vies/disclaimer.html
+  contact:
+    name: Commissione Europea
+    url: http://ec.europa.eu/taxation_customs/vies/
+    email: todo
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: v5.4.0
+  x-summary: |
+    Sistema elettronico di scambio di dati sull'IVA (VIES): Verifica della validità di una partita IVA
+  x-api-id: 81e79570-58ae-4cb0-b3f3-554a476a1fb9
+servers:
+- url: http://ec.europa.eu/taxation_customs/vies
+  description: Vies Server.
+paths:
+  /checkVatTestService.wsdl:
+    get:
+      summary: Retrieve technical specifications via wsdl.
+      description: |
+        WSDL technical specifications
+      operationId: get_wsdl
+      responses:
+        200:
+          description: The WSDL has been correctly retrieved.
+          content:
+            application/wsdl+xml:
+              schema: {}
+tags:
+- name: public
+  description: Public search.
